@@ -19,18 +19,20 @@ bool prim() {
 	memset(vis, 0, sizeof vis);
 	memset(point, inf, sizeof point);
 	point[1] = 0;
-	for (int i = 1; i < n; i++) {
-		int x = 0;
-		for (int j = 1; j <= n; j++) {
-			if (!vis[j] && (x == 0 || point[j] < point[x]))x = j;
+	for (i = 1; i < n; i++) {
+		int x = 0, y = 1;
+		for (j = 1; j <= n; j++) {
+			if (!vis[j] && (x == 0 || point[j] < point[x]))
+				x = j;
 		}
 		vis[x] = 1;
-		for (int y = 1; y <= n; y++) {
-			if (!vis[y])point[y] = min(point[y], mp[x][y]);
+		for (y = 1; y <= n; y++) {
+			if (!vis[y])
+				point[y] = min(point[y], mp[x][y]);
 		}
 	}
 	ans = 0;
-	for (int i = 2; i <= n; i++) {
+	for (i = 2; i <= n; i++) {
 		if (point[i] == inf)
 			return 0;
 		ans += point[i];
