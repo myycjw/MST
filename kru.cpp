@@ -13,39 +13,39 @@ int i, j, k;
 int m, n, q;
 const int M = 1e5 + 10;
 const int N = 1e5 + 10;
-int fa[N],ans;
-int get(int x) {
-	return fa[x] == x ? x : fa[x] = get(fa[x]);
+int fa[N], ans;
+int f(int x) {
+	return fa[x] == x ? x : fa[x] = f(fa[x]);
 }
-void merge(int x, int y) {
-	fa[get(x)] = get(y);
+void find(int x, int y) {
+	fa[f(x)] = f(y);
 }
-struct rec {
+struct reo {
 	int x, y, z;
-	bool friend operator<(const rec& a, const rec& b) {
+	bool friend operator<(const reo& a, const reo& b) {
 		return a.z < b.z;
 	}
-}e[M];
+}edge[M];
 bool kruskal() {
 	for (i = 1; i <= n; i++)
 		fa[i] = i;
-	sort(e + 1, e + 1 + m);
+	sort(edge + 1, edge + 1 + m);
 	ans = 0;
 	int cnt = 0;
-	for (int i = 1; i <= m; i++) {
-		int fx = get(e[i].x), fy = get(e[i].y);
+	for (i = 1; i <= m; i++) {
+		int fx = f(edge[i].x), fy = f(edge[i].y);
 		if (fx == fy)
 			continue;
-		merge(fx, fy);
+		find(fx, fy);
 		cnt++;
-		ans += e[i].z;
+		ans += edge[i].z;
 	}
 	return cnt == n - 1;
 }
 int main() {
 	cin >> n >> m;
 	for (i = 1; i <= m; i++) {
-		cin >> e[i].x >> e[i].y >> e[i].z;
+		cin >> edge[i].x >> edge[i].y >> edge[i].z;
 	}
 	if (kruskal())
 		cout << ans << endl;
